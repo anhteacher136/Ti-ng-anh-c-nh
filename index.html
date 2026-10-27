@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vở luyện tập – Word Form, Word Order, Transformation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#EEF1F8; --grid:#D9D4EE; --grid-strong:#B9B0E0;
+  --paper:#FFFFFF; --ink:#2E1F5E; --ink-soft:#5D5385; --margin:#E8818A;
+  --red:#D6342C; --green:#1E8A57; --green-bg:#E3F5EC; --red-bg:#FDE9E7;
+  --hl:#FFE45C; --chip:#EFEAFB; --line:#CFC8EA; --btn:#4B2E83; --btn-ink:#FFFFFF;
+  color-scheme: light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#17142A; --grid:#252040; --grid-strong:#332C58;
+    --paper:#211D3A; --ink:#ECE8FF; --ink-soft:#B4ACDA; --margin:#B4545D;
+    --red:#FF7A70; --green:#5AD39A; --green-bg:#173A2C; --red-bg:#43201F;
+    --hl:#6B5A10; --chip:#2F2952; --line:#433B70; --btn:#B9A6FF; --btn-ink:#1A1530;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --page:#17142A; --grid:#252040; --grid-strong:#332C58;
+  --paper:#211D3A; --ink:#ECE8FF; --ink-soft:#B4ACDA; --margin:#B4545D;
+  --red:#FF7A70; --green:#5AD39A; --green-bg:#173A2C; --red-bg:#43201F;
+  --hl:#6B5A10; --chip:#2F2952; --line:#433B70; --btn:#B9A6FF; --btn-ink:#1A1530;
+  color-scheme: dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; min-height:100vh; color:var(--ink); background-color:var(--page);
+  font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:17px; line-height:1.6;
+  background-image:
+    linear-gradient(90deg,var(--grid-strong) 1px,transparent 1px),
+    linear-gradient(var(--grid-strong) 1px,transparent 1px),
+    linear-gradient(var(--grid) 1px,transparent 1px);
+  background-size:32px 32px,32px 32px,32px 8px;
+}
+.wrap{max-width:760px;margin:0 auto;padding:20px 14px 48px}
+h1,h2,.display{font-family:"Baloo 2","Be Vietnam Pro",system-ui,sans-serif;line-height:1.15;margin:0}
+.sheet{
+  position:relative;background:var(--paper);border-radius:6px 14px 14px 6px;
+  padding:26px 22px 24px 46px;box-shadow:0 2px 0 var(--line),0 10px 26px -18px rgba(30,20,80,.5);
+}
+.sheet::before{content:"";position:absolute;left:28px;top:0;bottom:0;width:2px;background:var(--margin);opacity:.7}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.part{font-family:"Baloo 2",sans-serif;font-weight:700;font-size:1.05rem;color:var(--ink-soft)}
+.score{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.15rem}
+.streak{color:var(--red);font-weight:600;font-size:.9rem;margin-left:8px}
+.track{display:flex;gap:3px;margin:0 0 20px;flex-wrap:wrap}
+.track span{flex:1 1 10px;min-width:8px;height:8px;border-radius:2px;background:var(--line)}
+.track span.ok{background:var(--green)} .track span.half{background:#E0A526} .track span.miss{background:var(--red)}
+.track span.now{outline:2px solid var(--ink);outline-offset:1px}
+.qnum{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:2.4rem;color:var(--red);line-height:1;margin-bottom:6px}
+.instr{font-size:.92rem;color:var(--ink-soft);margin:0 0 14px}
+.sentence{font-size:1.18rem;line-height:2.1;margin:0 0 8px}
+.word{display:inline-block;background:var(--hl);color:var(--ink);padding:0 8px;border-radius:4px;font-weight:600;letter-spacing:.02em}
+.orig{font-size:1.05rem;color:var(--ink-soft);border-left:3px solid var(--line);padding-left:12px;margin:0 0 14px}
+.key{display:inline-block;border:2px solid var(--red);color:var(--red);font-weight:700;border-radius:999px;padding:0 12px;margin-left:4px;font-size:.95rem}
+input.blank{
+  font:inherit;color:var(--ink);background:transparent;border:none;border-bottom:2px dashed var(--ink-soft);
+  padding:0 4px;min-width:9ch;width:12ch;max-width:100%;outline:none;
+}
+input.blank.wide{width:22ch}
+input.blank:focus{border-bottom-style:solid;border-bottom-color:var(--btn)}
+input.blank.right{color:var(--green);border-bottom-color:var(--green);border-bottom-style:solid}
+input.blank.wrong{color:var(--red);border-bottom-color:var(--red)}
+.tray{min-height:62px;border:2px dashed var(--line);border-radius:10px;padding:10px;display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px;align-items:center}
+.tray.empty::before{content:"Chạm vào các cụm từ bên dưới theo đúng thứ tự";color:var(--ink-soft);font-size:.9rem}
+.pool{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.chunk{font:inherit;font-size:1rem;background:var(--chip);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
+.chunk:hover{border-color:var(--btn)}
+.tray .chunk{background:var(--paper);border-color:var(--btn)}
+.chunk:disabled{cursor:default;opacity:.9}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+button.btn{font:inherit;font-weight:600;border-radius:10px;padding:10px 18px;cursor:pointer;border:2px solid var(--btn);background:var(--btn);color:var(--btn-ink)}
+button.ghost{background:transparent;color:var(--btn)}
+button.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,.chunk:focus-visible,input:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.feedback{margin-top:16px;border-radius:10px;padding:12px 14px;font-size:1rem;display:none}
+.feedback.show{display:block}
+.feedback.good{background:var(--green-bg);color:var(--green)}
+.feedback.bad{background:var(--red-bg);color:var(--red)}
+.feedback .full{display:block;color:var(--ink);margin-top:4px}
+.mark{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border:3px solid var(--red);border-radius:50%;color:var(--red);font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.3rem;transform:rotate(-8deg);float:right;margin:-6px 0 0 10px}
+@media (prefers-reduced-motion:no-preference){ .mark.pop{animation:pop .35s ease-out} @keyframes pop{from{transform:rotate(-30deg) scale(1.6);opacity:0}} }
+/* start */
+.hero h1{font-size:clamp(2rem,6vw,3rem);font-weight:800}
+.hero p{color:var(--ink-soft);margin:8px 0 20px;max-width:56ch}
+label.lbl{display:block;font-weight:600;margin-bottom:6px}
+input.name{font:inherit;width:100%;max-width:360px;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink)}
+.rounds{display:grid;gap:10px;margin:20px 0 6px}
+.round{display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;font:inherit;background:var(--paper);color:var(--ink);border:2px solid var(--line);border-radius:12px;padding:12px 16px;cursor:pointer}
+.round:hover{border-color:var(--btn)}
+.round b{font-family:"Baloo 2",sans-serif;font-size:1.15rem}
+.round small{color:var(--ink-soft);display:block}
+.round.all{border-color:var(--btn);background:var(--chip)}
+.err{color:var(--red);font-size:.9rem;min-height:1.4em;margin-top:6px}
+.rules{font-size:.9rem;color:var(--ink-soft);margin-top:18px}
+/* end */
+.grade{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin:10px 0 18px}
+.bigmark{width:120px;height:120px;border:5px solid var(--red);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--red);transform:rotate(-7deg);font-family:"Baloo 2",sans-serif}
+.bigmark strong{font-size:2.8rem;line-height:1}
+.bigmark span{font-size:.85rem}
+.stats p{margin:2px 0}
+.review{margin-top:16px}
+.review h2{font-size:1.3rem;margin-bottom:8px}
+.ritem{border-top:1px solid var(--line);padding:10px 0;font-size:.97rem}
+.ritem .you{color:var(--red);text-decoration:line-through}
+.ritem .ans{color:var(--green);font-weight:600}
+.toast{margin-top:10px;color:var(--green);font-size:.92rem;min-height:1.4em}
+</style>
+</head>
+<body>
+<main class="wrap" id="app"></main>
+
+<script>
+const EMAIL = "khuonganh2111@gmail.com";
+
+const Q = [
+ // PART I
+ {n:92,p:"I",s:"Since the timetable was updated, the school shuttle has become more ___ with far fewer unexpected cancellations.",w:"RELY",a:["reliable"]},
+ {n:93,p:"I",s:"To improve her listening skills, Trang listens to short English podcasts ___ rather than only before tests.",w:"REGULAR",a:["regularly"]},
+ {n:94,p:"I",s:"The laboratory identified mercury as a harmful ___, although the river water looked perfectly clear.",w:"POLLUTE",a:["pollutant"]},
+ {n:95,p:"I",s:"With its shaded paths and comfortable benches, the small park has become an ___ place for families to relax.",w:"ATTRACT",a:["attractive"]},
+ {n:96,p:"I",s:"When the class organised a book exchange, keeping track of borrowed books became Lan’s main ___.",w:"RESPONSIBLE",a:["responsibility"]},
+ {n:97,p:"I",s:"The illustrated guide proved especially ___ when students had to repair the display without their teacher’s help.",w:"USE",a:["useful"]},
+ {n:98,p:"I",s:"Even after sending her application, Mai’s ___ about the upcoming interview kept her awake at night.",w:"ANXIOUS",a:["anxiety"]},
+ {n:99,p:"I",s:"The low barriers around the young trees provided extra ___ against accidental damage during the festival.",w:"PROTECT",a:["protection"]},
+ {n:100,p:"I",s:"Students who copy model answers too often may become overly ___ on them when writing their own essays.",w:"RELY",a:["reliant"]},
+ {n:101,p:"I",s:"During the interview, students were reminded to respond ___ when discussing sensitive local customs.",w:"APPROPRIATE",a:["appropriately"]},
+ {n:102,p:"I",s:"The report examines the long-term effects of plastic ___ on marine wildlife rather than focusing on one discarded bottle.",w:"POLLUTE",a:["pollution"]},
+ {n:103,p:"I",s:"The outdoor rehearsal will ___ be moved to the school hall because heavy rain is expected this afternoon.",w:"PROBABLE",a:["probably"]},
+ {n:104,p:"I",s:"Although the menu offers many dishes, the restaurant’s ___ is a fragrant noodle soup prepared with fresh herbs.",w:"SPECIAL",a:["speciality","specialty"]},
+ // PART J
+ {n:105,p:"J",c:["from the old market","me","how to reach","show","the pottery museum","could you"],o:[[5,3,1,2,4,0]],f:"Could you show me how to reach the pottery museum from the old market?"},
+ {n:106,p:"J",c:["tell","in this neighbourhood","us","can you","where to find","the nearest recycling station"],o:[[3,0,2,4,5,1],[1,3,0,2,4,5]],f:"Can you tell us where to find the nearest recycling station in this neighbourhood?"},
+ {n:107,p:"J",c:["for the guided tour","could you","when to arrive","tell","the visitors","at the heritage centre"],o:[[1,3,4,2,5,0],[1,3,4,2,0,5]],f:"Could you tell the visitors when to arrive at the heritage centre for the guided tour?"},
+ {n:108,p:"J",c:["the updated schedule","visitors","if","at the information desk","should check","the bus arrives late"],o:[[2,5,1,4,0,3],[1,4,0,3,2,5]],f:"If the bus arrives late, visitors should check the updated schedule at the information desk."},
+ {n:109,p:"J",c:["during revision","students","on their assignments","to stay focused","scrolling through messages","should avoid"],o:[[1,5,4,0,3,2],[0,1,5,4,3,2],[1,5,4,3,2,0]],f:"Students should avoid scrolling through messages during revision to stay focused on their assignments."},
+ {n:110,p:"J",c:["during the lunch break","you","can talk","if","to the school counsellor","you feel overwhelmed"],o:[[3,5,1,2,4,0],[1,2,4,0,3,5]],f:"If you feel overwhelmed, you can talk to the school counsellor during the lunch break."},
+ // PART K
+ {n:111,p:"K",s1:"The students are unsure where they should display the photographs from their neighbourhood project.",k:"TO",b:"The students are unsure",e:"the photographs from their neighbourhood project.",r:[/^where to display$/],a:"where to display"},
+ {n:112,p:"K",s1:"Hoa is trying to decide which craft stall she should visit first.",k:"TO",b:"Hoa is trying to decide",e:"first.",r:[/^which (craft )?stall to visit$/],a:"which craft stall to visit"},
+ {n:113,p:"K",s1:"The organisers have not decided when they should close registration for the neighbourhood fair.",k:"TO",b:"The organisers have not decided",e:"for the neighbourhood fair.",r:[/^when to close (the )?registration$/],a:"when to close registration"},
+ {n:114,p:"K",s1:"The neighbourhood association reduces the amount of plastic waste at its monthly events.",k:"DOWN",b:"The neighbourhood association",e:"plastic waste at its monthly events.",r:[/^cuts down on( the amount of)?$/],a:"cuts down on (the amount of)"},
+ {n:115,p:"K",s1:"Every Tuesday, the youth club uses up its supply of coloured card during the art workshop.",k:"OUT",b:"Every Tuesday, the youth club",e:"coloured card during the art workshop.",r:[/^runs out of( its supply of)?$/],a:"runs out of"},
+ {n:116,p:"K",s1:"Every afternoon, Ms Hoa looks after the children in the after-school club.",k:"CARE",b:"Every afternoon, Ms Hoa",e:"the children in the after-school club.",r:[/^takes care of$/],a:"takes care of"},
+ {n:117,p:"K",s1:"As the reliability of the village bus service improves, fewer passengers miss appointments.",k:"RELIABLE",b:"The",e:", the fewer passengers miss appointments.",r:[/^more reliable (the )?(village )?bus service (becomes|is|gets)$/],a:"more reliable the village bus service becomes"},
+ {n:118,p:"K",s1:"As more shoppers enter the weekend market, it becomes harder to walk between the stalls.",k:"CROWDED",b:"The",e:", the harder it becomes to walk between the stalls.",r:[/^more crowded (the )?(weekend )?market (becomes|gets|is)$/],a:"more crowded the weekend market becomes"},
+ {n:119,p:"K",s1:"As entrance fees for the museum increase, fewer students can afford to visit.",k:"EXPENSIVE",b:"The",e:", the fewer students can afford to visit.",r:[/^more expensive (the )?(museums? )?(entrance )?(fees|tickets)( for the museum)? (become|are|get)$/],a:"more expensive the entrance fees for the museum become"},
+ {n:120,p:"K",s1:"Students cannot enter the school science lab without protective goggles.",k:"WEAR",b:"If students want to enter the school science lab, they",e:".",r:[/^(have to|must|need to) wear (protective )?goggles$/],a:"have to / must wear protective goggles"},
+ {n:121,p:"K",s1:"The school nurse advises students to take regular sips of water during sports practice to avoid dehydration.",k:"DRINK",b:"If students want to avoid dehydration during sports practice, they",e:"regularly.",r:[/^should drink (some |more )?(sips of )?water$/],a:"should drink water"},
+ {n:122,p:"K",s1:"The cycling-event organiser requires participants to arrive with their own helmets.",k:"BRING",b:"If participants want to join the cycling event, they",e:".",r:[/^(have to|must|need to) bring (their own |their )?helmets$/],a:"have to / must bring their own helmets"}
+];
+
+const PARTS = {
+  I:{t:"Phần I – Word formation",i:"Viết dạng đúng của từ trong ngoặc. Chỉ viết MỘT từ."},
+  J:{t:"Phần J – Word order",i:"Chạm vào các cụm từ theo đúng thứ tự để tạo câu hoàn chỉnh."},
+  K:{t:"Phần K – Sentence transformation",i:"Hoàn thành câu thứ hai cùng nghĩa với câu thứ nhất. Dùng TỪ KHOÁ, không đổi dạng từ."}
+};
+
+const app = document.getElementById("app");
+let S = null;
+
+const norm = s => s.toLowerCase().replace(/[’‘]/g,"'").replace(/[.,!?;:"']/g,"").replace(/\s+/g," ").trim();
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const byN = n => Q.find(q=>q.n===n);
+
+function start(ids, name){
+  S = {name, ids, idx:0, score:0, streak:0, res:{}};
+  ids.forEach(n=>S.res[n]={st:null,tries:0,hint:false,given:"",pts:0});
+  showQ();
+}
+
+/* ---------- start screen ---------- */
+function showStart(prevName){
+  const cnt = p => Q.filter(q=>q.p===p).length;
+  app.innerHTML = `
+  <section class="sheet hero">
+    <h1>Vở luyện tập</h1>
+    <p>Word formation, word order và sentence transformation – câu 92 đến 122. Làm đúng ngay lần đầu được 10 điểm, lần thứ hai được 5 điểm.</p>
+    <label class="lbl" for="nm">Họ và tên</label>
+    <input class="name" id="nm" autocomplete="name" placeholder="Ví dụ: Nguyễn Minh Anh" value="${esc(prevName||"")}">
+    <div class="err" id="err"></div>
+    <div class="rounds">
+      <button class="round all" data-p="ALL"><span><b>Làm tất cả</b><small>3 phần liên tiếp</small></span><span>${Q.length} câu</span></button>
+      <button class="round" data-p="I"><span><b>${PARTS.I.t}</b><small>Câu 92–104</small></span><span>${cnt("I")} câu</span></button>
+      <button class="round" data-p="J"><span><b>${PARTS.J.t}</b><small>Câu 105–110</small></span><span>${cnt("J")} câu</span></button>
+      <button class="round" data-p="K"><span><b>${PARTS.K.t}</b><small>Câu 111–122</small></span><span>${cnt("K")} câu</span></button>
+    </div>
+    <p class="rules">Mỗi câu có 2 lần thử. Dùng gợi ý sẽ bị trừ 3 điểm của câu đó. Làm xong, bấm “Gửi kết quả cho cô” để gửi bài.</p>
+  </section>`;
+  app.querySelectorAll(".round").forEach(b=>b.onclick=()=>{
+    const name = document.getElementById("nm").value.trim();
+    if(!name){document.getElementById("err").textContent="Nhập họ và tên trước khi bắt đầu.";document.getElementById("nm").focus();return;}
+    const p = b.dataset.p;
+    start(Q.filter(q=>p==="ALL"||q.p===p).map(q=>q.n), name);
+  });
+}
+
+/* ---------- question screen ---------- */
+function showQ(){
+  const n = S.ids[S.idx], q = byN(n), r = S.res[n];
+  const track = S.ids.map((id,i)=>`<span class="${S.res[id].st||""}${i===S.idx?" now":""}"></span>`).join("");
+  let body = "";
+  if(q.p==="I"){
+    const [a,b] = q.s.split("___");
+    body = `<p class="sentence">${esc(a)}<input class="blank" id="ans" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Đáp án">${esc(b)} <span class="word">${q.w}</span></p>`;
+  } else if(q.p==="K"){
+    body = `<p class="orig">${esc(q.s1)}</p>
+      <p class="instr">Từ khoá: <span class="key">${q.k}</span></p>
+      <p class="sentence">→ ${esc(q.b)} <input class="blank wide" id="ans" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Đáp án"> ${esc(q.e)}</p>`;
+  } else {
+    body = `<div class="tray empty" id="tray" aria-label="Câu của em"></div><div class="pool" id="pool"></div>`;
+  }
+  app.innerHTML = `
+  <section class="sheet">
+    <div class="topbar">
+      <span class="part">${PARTS[q.p].t}</span>
+      <span><span class="score" id="sc">${S.score} điểm</span><span class="streak" id="stk">${S.streak>=2?"Chuỗi đúng: "+S.streak:""}</span></span>
+    </div>
+    <div class="track" aria-hidden="true">${track}</div>
+    <div class="qnum">${q.n}<span id="mk"></span></div>
+    <p class="instr">${PARTS[q.p].i}</p>
+    ${body}
+    <div class="feedback" id="fb" role="status"></div>
+    <div class="actions" id="acts">
+      <button class="btn" id="chk">Kiểm tra</button>
+      <button class="btn ghost" id="hint">Gợi ý (−3)</button>
+      ${q.p==="J"?'<button class="btn ghost" id="clr">Xếp lại</button>':""}
+    </div>
+  </section>`;
+  if(q.p==="J") setupJ(q); else {
+    const inp = document.getElementById("ans");
+    inp.focus();
+    inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();document.getElementById("chk").click();}});
+    inp.addEventListener("input",()=>inp.classList.remove("wrong"));
+  }
+  document.getElementById("chk").onclick = ()=>check(q);
+  document.getElementById("hint").onclick = ()=>hint(q);
+}
+
+let J = null;
+function setupJ(q){
+  J = {placed:[], q};
+  drawJ();
+  document.getElementById("clr").onclick = ()=>{J.placed=[];drawJ();};
+}
+function drawJ(){
+  const tray = document.getElementById("tray"), pool = document.getElementById("pool");
+  tray.innerHTML = J.placed.map((ci,pos)=>`<button class="chunk" data-pos="${pos}">${esc(J.q.c[ci])}</button>`).join("");
+  tray.classList.toggle("empty", J.placed.length===0);
+  pool.innerHTML = J.q.c.map((t,ci)=>J.placed.includes(ci)?"":`<button class="chunk" data-ci="${ci}">${esc(t)}</button>`).join("");
+  pool.querySelectorAll(".chunk").forEach(b=>b.onclick=()=>{J.placed.push(+b.dataset.ci);drawJ();});
+  tray.querySelectorAll(".chunk").forEach(b=>b.onclick=()=>{J.placed.splice(+b.dataset.pos,1);drawJ();});
+}
+
+function hint(q){
+  const r = S.res[q.n];
+  if(!r.hint){r.hint=true;}
+  const fb = document.getElementById("fb");
+  if(q.p==="I"){
+    fb.className="feedback show bad"; fb.style.color="var(--ink)";
+    fb.innerHTML=`Gợi ý: từ cần điền bắt đầu bằng <b>${esc(q.a[0].slice(0,3))}…</b> và có ${q.a[0].length} chữ cái.`;
+  } else if(q.p==="K"){
+    fb.className="feedback show bad"; fb.style.color="var(--ink)";
+    fb.innerHTML=`Gợi ý: đáp án bắt đầu bằng <b>${esc(q.a.split(" ")[0])} …</b>`;
+  } else {
+    J.placed=[q.o[0][0]]; drawJ();
+    fb.className="feedback show bad"; fb.style.color="var(--ink)";
+    fb.textContent="Gợi ý: cụm từ đầu tiên đã được đặt vào câu.";
+  }
+  document.getElementById("hint").disabled=true;
+}
+
+function check(q){
+  const r = S.res[q.n], fb = document.getElementById("fb");
+  fb.style.color="";
+  let ok=false, given="";
+  if(q.p==="J"){
+    if(J.placed.length<q.c.length){fb.className="feedback show bad";fb.textContent="Hãy dùng hết tất cả các cụm từ.";return;}
+    given = J.placed.map(ci=>q.c[ci]).join(" ");
+    ok = q.o.some(o=>o.every((v,i)=>v===J.placed[i]));
+  } else {
+    const inp = document.getElementById("ans");
+    given = inp.value.trim();
+    if(!given){fb.className="feedback show bad";fb.textContent="Điền đáp án trước khi kiểm tra.";inp.focus();return;}
+    const g = norm(given);
+    ok = q.p==="I" ? q.a.includes(g) : q.r.some(rx=>rx.test(g));
+    if(q.p==="K" && !ok && !g.split(" ").includes(q.k.toLowerCase())) {
+      r.tries++;
+      if(r.tries<2){inp.classList.add("wrong");fb.className="feedback show bad";fb.innerHTML=`Chưa đúng – nhớ dùng từ khoá <b>${q.k}</b>. Thử lại một lần nữa.`;inp.select();return;}
+      return finish(q,false,given);
+    }
+  }
+  r.tries++;
+  if(ok) return finish(q,true,given);
+  if(r.tries<2){
+    fb.className="feedback show bad";
+    fb.textContent = q.p==="J" ? "Chưa đúng thứ tự. Chạm vào cụm từ trong khung để đổi lại, rồi thử lần nữa." : "Chưa đúng. Thử lại một lần nữa.";
+    if(q.p!=="J"){const inp=document.getElementById("ans");inp.classList.add("wrong");inp.select();}
+    return;
+  }
+  finish(q,false,given);
+}
+
+function answerText(q){ return q.p==="I" ? q.a.join(" / ") : q.p==="J" ? q.f : q.a; }
+
+function finish(q,ok,given){
+  const r = S.res[q.n], fb = document.getElementById("fb");
+  r.given = given;
+  let pts = 0;
+  if(ok){ pts = r.tries===1?10:5; if(r.hint) pts=Math.max(0,pts-3); r.st = r.tries===1&&!r.hint?"ok":"half"; S.streak++; }
+  else { r.st="miss"; S.streak=0; }
+  r.pts=pts; S.score+=pts;
+  document.getElementById("sc").textContent = S.score+" điểm";
+  document.getElementById("stk").textContent = S.streak>=2?"Chuỗi đúng: "+S.streak:"";
+  document.getElementById("mk").innerHTML = `<span class="mark pop">${ok?"+"+pts:"✗"}</span>`;
+  if(q.p!=="J"){const inp=document.getElementById("ans");inp.disabled=true;inp.classList.remove("wrong");inp.classList.add(ok?"right":"wrong");}
+  else document.querySelectorAll(".chunk").forEach(b=>b.disabled=true);
+  fb.className = "feedback show "+(ok?"good":"bad");
+  fb.innerHTML = ok
+    ? (q.p==="J" ? `Chính xác!<span class="full">${esc(q.f)}</span>` : `Chính xác! ${q.p==="I"&&q.a.length>1?"(cũng chấp nhận: "+esc(q.a.join(" / "))+")":""}`)
+    : `Đáp án đúng:<span class="full">${esc(answerText(q))}</span>`;
+  const last = S.idx===S.ids.length-1;
+  document.getElementById("acts").innerHTML = `<button class="btn" id="nx">${last?"Xem kết quả":"Câu tiếp theo"}</button>`;
+  const nx = document.getElementById("nx");
+  nx.focus();
+  nx.onclick = ()=>{ if(last) showEnd(); else {S.idx++; showQ();} };
+}
+
+/* ---------- end screen ---------- */
+function summaryText(){
+  const max = S.ids.length*10;
+  const ok = S.ids.filter(n=>S.res[n].st!=="miss").length;
+  const lines = S.ids.map(n=>{
+    const r=S.res[n], q=byN(n);
+    const tag = r.st==="ok"?"Đúng":r.st==="half"?"Đúng (lần 2/gợi ý)":"Sai";
+    return `Câu ${n}: ${tag} – em viết: "${r.given}"${r.st==="miss"?" | đáp án: "+answerText(q):""}`;
+  });
+  return `Học sinh: ${S.name}\nBài: Word formation / Word order / Sentence transformation (câu ${S.ids[0]}–${S.ids[S.ids.length-1]})\nĐiểm: ${S.score}/${max} – thang 10: ${grade10()}\nSố câu đúng: ${ok}/${S.ids.length}\n\n${lines.join("\n")}`;
+}
+function grade10(){ return (Math.round(S.score/(S.ids.length*10)*100)/10).toString().replace(".",","); }
+
+function showEnd(){
+  const wrong = S.ids.filter(n=>S.res[n].st!=="ok");
+  const nOk = S.ids.filter(n=>S.res[n].st!=="miss").length;
+  const review = wrong.map(n=>{
+    const r=S.res[n], q=byN(n);
+    return `<div class="ritem"><b>${n}.</b> ${r.st==="miss"?`<span class="you">${esc(r.given)}</span> → `:""}<span class="ans">${esc(answerText(q))}</span></div>`;
+  }).join("");
+  app.innerHTML = `
+  <section class="sheet">
+    <h1 class="display" style="font-size:2rem">Hoàn thành!</h1>
+    <div class="grade">
+      <div class="bigmark"><strong>${grade10()}</strong><span>/ 10</span></div>
+      <div class="stats">
+        <p><b>${esc(S.name)}</b></p>
+        <p>${S.score} / ${S.ids.length*10} điểm</p>
+        <p>Đúng ${nOk} / ${S.ids.length} câu</p>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="send">Gửi kết quả cho cô</button>
+      <button class="btn ghost" id="copy">Sao chép kết quả</button>
+      ${wrong.length?'<button class="btn ghost" id="redo">Làm lại câu chưa trọn điểm</button>':""}
+      <button class="btn ghost" id="again">Chơi lại từ đầu</button>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    ${wrong.length?`<div class="review"><h2>Xem lại</h2>${review}</div>`:`<p>Em làm đúng tất cả ngay lần đầu. Tuyệt vời!</p>`}
+  </section>`;
+  const subj = `Kết quả bài tập 92–122 – ${S.name} – ${grade10()}/10`;
+  document.getElementById("send").onclick = ()=>{
+    const url = `mailto:${EMAIL}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(summaryText())}`;
+    const w = window.open(url,"_blank");
+    if(!w) window.location.href = url;
+    document.getElementById("toast").textContent = "Ứng dụng email sẽ mở ra – bấm Gửi để nộp bài. Nếu không thấy, hãy bấm “Sao chép kết quả” rồi gửi qua Zalo hoặc email cho cô.";
+  };
+  document.getElementById("copy").onclick = async ()=>{
+    const t = summaryText(), toast = document.getElementById("toast");
+    try{ await navigator.clipboard.writeText(t); toast.textContent="Đã sao chép kết quả."; }
+    catch(e){
+      const ta=document.createElement("textarea"); ta.value=t; document.body.appendChild(ta); ta.select();
+      try{document.execCommand("copy");toast.textContent="Đã sao chép kết quả.";}catch(_){toast.textContent="Không sao chép được – hãy chụp màn hình gửi cô.";}
+      ta.remove();
+    }
+  };
+  if(wrong.length) document.getElementById("redo").onclick = ()=>start(wrong, S.name);
+  document.getElementById("again").onclick = ()=>showStart(S.name);
+}
+
+showStart();
+</script>
+</body>
+</html>
